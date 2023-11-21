@@ -1,0 +1,20 @@
+name: publish_terraform_module
+
+concurrency:  ci-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: terraform init
+      - run: terraform validate
+      - uses: RichardInnocent/semantic-versioning-git@v0.0.1
